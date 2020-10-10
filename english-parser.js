@@ -40,8 +40,8 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
         }
     }
 
-    // generate AST from input 
-    function interpreterAst(userInput = []) {
+    // Lexical Analysis
+    function generateAst(userInput = []) {
         userInput.forEach((line, i) => {
             const l = line.trim()
             const tabCount = countTabsInLine(line)
@@ -55,7 +55,7 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
             })
         })
     }
-    interpreterAst(userInput)
+    generateAst(userInput)
     console.log(nodes)
 
     const extractTextAttrs = ast => {
