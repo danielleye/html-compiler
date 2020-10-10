@@ -1,10 +1,7 @@
-const node = []
-let i = 0 
-let closeNodes = []
 document.querySelector('.add-btn').addEventListener('click',()=>{
     const str = document.querySelector('.user-input').value
     const userInput = str.split(/\n/).filter(n => n.length > 0)
-    const nodes = []
+    let nodes = []
     let numOfTabs = 0
 
     const countTabsInLine = (text) => {
@@ -65,6 +62,9 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
         return `src="${ast.attrs.src}" alt="${ast.attrs.alt}"`
     }
 
+    let i = 0 
+    let node = []
+    let closeNodes = []
     const AstParser = (ast) => {
         for(const [key, value] of Object.entries(ast)) {
             if (key === 'tag') {
@@ -111,6 +111,7 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
     const htmlTmpl = AstParser(generateHTMLObject(nodes)[0])
     document.querySelector('.results').innerText = htmlTmpl
     document.querySelector('.display-area').innerHTML = htmlTmpl
+    node = []
 })
 
 document.querySelector('.user-input').addEventListener('keydown', function(e) {
