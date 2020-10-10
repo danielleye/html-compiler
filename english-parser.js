@@ -40,18 +40,22 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
         }
     }
 
-    userInput.forEach((line, i) => {
-        const l = line.trim()
-        const tabCount = countTabsInLine(line)
-        numOfTabs = tabCount > numOfTabs ? numOfTabs + tabCount : tabCount
-        if (tabCount === 0) numOfTabs = 0
-        nodes.push({
-            id: i + 1,
-            parent: numOfTabs,
-            tag: extractTag(l),
-            ...extractAttrs(l)
+    // generate AST from input 
+    function interpreterAst(userInput = []) {
+        userInput.forEach((line, i) => {
+            const l = line.trim()
+            const tabCount = countTabsInLine(line)
+            numOfTabs = tabCount > numOfTabs ? numOfTabs + tabCount : tabCount
+            if (tabCount === 0) numOfTabs = 0
+            nodes.push({
+                id: i + 1,
+                parent: numOfTabs,
+                tag: extractTag(l),
+                ...extractAttrs(l)
+            })
         })
-    })
+    }
+    interpreterAst(userInput)
     console.log(nodes)
 
     const extractTextAttrs = ast => {
@@ -62,6 +66,7 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
         return `src="${ast.attrs.src}" alt="${ast.attrs.alt}"`
     }
 
+    // AST parser
     let i = 0 
     let node = []
     let closeNodes = []
@@ -89,6 +94,7 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
         return [...node, ...closeNodes].join('')
     }
 
+    // Ast to HTML
     function generateHTMLObject(a, parent = 0) {
         const ast = []
         for (let i in a) {
@@ -114,6 +120,7 @@ document.querySelector('.add-btn').addEventListener('click',()=>{
     node = []
 })
 
+// use tab in textarea
 document.querySelector('.user-input').addEventListener('keydown', function(e) {
     if (e.key == 'Tab') {
       e.preventDefault()
